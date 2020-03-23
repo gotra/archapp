@@ -1,0 +1,64 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: grajeev
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: communication_id_pk
+                  name: id
+                  type: bigint
+              - column:
+                  name: status
+                  type: VARCHAR(30)
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: creation_date
+                  type: datetime
+            tableName: t_communication
+  - changeSet:
+      id: 2
+      author: grajeev
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: person_id
+                  name: id
+                  type: bigint
+              - column:
+                  name: comm_id
+                  type: bigint
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+              - column:
+                  name: family_name
+                  type: VARCHAR(50)
+              - column:
+                  name: email
+                  type: VARCHAR(100)
+            tableName: t_person
+  - changeSet:
+      id: 3
+      author: grajeev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: comm_id
+            baseTableName: t_person
+            constraintName: fk_person_comm
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: t_communication
